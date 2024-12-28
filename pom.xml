@@ -10,13 +10,20 @@
   <packaging>jar</packaging>
 
   <name>version-util</name>
-  <url>http://www.example.com</url>
+  <url>https://hidirektor.com.tr</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/hidirektor/version-util</url>
+    </repository>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -39,6 +46,14 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
       </plugin>
     </plugins>
   </build>
