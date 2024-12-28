@@ -20,6 +20,16 @@ jobs:
           server-id: github
           settings-path: ${{ github.workspace }}
 
+      - name: Configure Maven Settings
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: |
+            [{
+              "id": "github",
+              "username": "${{ github.actor }}",
+              "password": "${{ secrets.MVN_TOKEN }}"
+            }]
+
       - name: Publish to GitHub Packages
         run: mvn deploy
         env:
