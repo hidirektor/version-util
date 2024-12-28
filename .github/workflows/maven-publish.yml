@@ -33,4 +33,4 @@ jobs:
       - name: Publish to GitHub Packages
         run: mvn deploy
         env:
-          MVN_TOKEN: ${{ secrets.MVN_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MVN_TOKEN }}
