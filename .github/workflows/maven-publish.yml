@@ -35,4 +35,4 @@ jobs:
       - name: Publish to GitHub Packages
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        run: mvn deploy
+        run: mvn deploy -X
