@@ -69,7 +69,7 @@ jobs:
           fi
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B clean install --file pom.xml
 
       - name: Publish to GitHub Packages
         env:
