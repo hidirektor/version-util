@@ -46,7 +46,7 @@ jobs:
           fi
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B clean compile --module-path target/classes
 
       - name: Publish to GitHub Packages
         env:
