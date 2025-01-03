@@ -6,13 +6,12 @@
 
     <groupId>me.t3sl4.util</groupId>
     <artifactId>version-util</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <name>Version Util</name>
     <description>GitHub releases based version control system.</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
     </properties>
 
     <dependencies>
