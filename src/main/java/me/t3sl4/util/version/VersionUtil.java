@@ -87,12 +87,10 @@ public class VersionUtil {
         }
     }
 
-    // Belirtilen versiyonu indirir
     public static void downloadVersion(String owner, String repo, String version, String destinationPath, String desiredFile) {
         downloadAsset(owner, repo, version, destinationPath, desiredFile);
     }
 
-    // En son versiyonu indirir
     public static void downloadLatest(String owner, String repo, String destinationPath, String desiredFile) {
         String latestVersion = getLatestVersion(owner, repo);
         downloadAsset(owner, repo, latestVersion, destinationPath, desiredFile);
