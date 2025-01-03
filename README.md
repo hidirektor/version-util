@@ -26,7 +26,7 @@ Version Util, Java ile geliştirilmiş bir sürüm kontrol ve güncelleme yardı
 <dependency>
     <groupId>com.github.hidirektor</groupId>
     <artifactId>version-util</artifactId>
-    <version>1.0.0</version>
+    <version>v1.0.4</version>
 </dependency>
 ```
 
