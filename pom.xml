@@ -6,7 +6,7 @@
     <artifactId>version-util</artifactId>
     <version>1.0.0</version>
     <name>Version Util</name>
-    <description>GitHub tabanlı sürüm kontrol kütüphanesi</description>
+    <description>GitHub releases based version control system.</description>
 
     <dependencies>
         <dependency>
