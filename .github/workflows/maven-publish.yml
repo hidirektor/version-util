@@ -61,7 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
 
-      # Yeni Release Oluşturma
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -72,9 +71,8 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 
-      # JitPack İçin Bildirim Gönderme
       - name: Trigger JitPack Build
         run: |
           curl -X POST https://jitpack.io/com/github/hidirektor/version-util/${{ env.VERSION }}
