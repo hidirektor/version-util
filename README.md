@@ -2,16 +2,13 @@
 
 [![](https://jitpack.io/v/hidirektor/version-util.svg)](https://jitpack.io/#hidirektor/version-util)
 
-Version Util, Java ile geliştirilmiş bir sürüm kontrol ve güncelleme yardımcı aracıdır.
+Version Util is a version management and update utility developed in Java.
 
-## Özellikler
-- GitHub sürüm bilgisini çekme
-- Dosya indirme ve ilerleme takibi
-- Kısayol oluşturma (masaüstü ve başlangıç klasörleri)
-- Platforma göre dosya çalıştırma desteği (Windows, Unix/Linux, MacOS)
-- JSON veri işleme
+## Features
+- Fetching version information from GitHub
+- File downloading with progress tracking
 
-## Kurulum
+## Installation
 
 ### Maven
 
@@ -24,9 +21,9 @@ Version Util, Java ile geliştirilmiş bir sürüm kontrol ve güncelleme yardı
 </repositories>
 
 <dependency>
-<groupId>com.github.hidirektor</groupId>
-<artifactId>version-util</artifactId>
-<version>v1.0.4</version>
+    <groupId>com.github.hidirektor</groupId>
+    <artifactId>version-util</artifactId>
+    <version>v1.0.4</version>
 </dependency>
 ```
 
@@ -42,54 +39,54 @@ dependencies {
 }
 ```
 
-## Kullanım
+## Usage
 
-### En Son Sürümü Alma
+### Fetching the Latest Version
 ```java
 String latestVersion = VersionUtil.getLatestVersion("owner", "repo");
-System.out.println("En son sürüm: " + latestVersion);
+System.out.println("Latest version: " + latestVersion);
 ```
 
-### Yerel Sürüm Kontrolü
+### Checking Local Version
 ```java
 String localVersion = VersionUtil.getLocalVersion("configNode", "versionKey");
-System.out.println("Yerel sürüm: " + localVersion);
+System.out.println("Local version: " + localVersion);
 ```
 
-### Sürüm Karşılaştırma
+### Version Comparison
 ```java
 boolean isSame = VersionUtil.compareVersions("1.0.0", "1.0.0");
-System.out.println("Sürümler eşit mi? " + isSame);
+System.out.println("Are versions equal? " + isSame);
 ```
 
-### Yayın Detaylarını Alma
+### Fetching Release Details
 ```java
 ReleaseDetail detail = VersionUtil.getReleaseDetail("owner", "repo", "1.0.0");
-System.out.println("Başlık: " + detail.getTitle());
-        System.out.println("Açıklama: " + detail.getDescription());
-        System.out.println("Dosyalar: " + detail.getAssets());
+System.out.println("Title: " + detail.getTitle());
+System.out.println("Description: " + detail.getDescription());
+System.out.println("Files: " + detail.getAssets());
 ```
 
-### En Son Yayın Detaylarını Alma
+### Fetching Latest Release Details
 ```java
 ReleaseDetail latestDetail = VersionUtil.getLatestReleaseDetail("owner", "repo");
-System.out.println("Başlık: " + latestDetail.getTitle());
-        System.out.println("Açıklama: " + latestDetail.getDescription());
-        System.out.println("Dosyalar: " + latestDetail.getAssets());
+System.out.println("Title: " + latestDetail.getTitle());
+System.out.println("Description: " + latestDetail.getDescription());
+System.out.println("Files: " + latestDetail.getAssets());
 ```
 
-### Dosya İndirme
-#### Belirli Sürüm
+### Downloading Files
+#### Specific Version
 ```java
 VersionUtil.downloadVersion("owner", "repo", "1.0.0", "./downloads", "example-file.jar");
 ```
 
-#### En Son Sürüm
+#### Latest Version
 ```java
 VersionUtil.downloadLatest("owner", "repo", "./downloads", "example-file.jar");
 ```
 
-### ProgressBar ile Dosya İndirme
+### File Downloading with ProgressBar
 ```java
 private void startDownloadTask(String fileName, ProgressBar currentProgressBar, String repoName) {
     Task<Void> downloadTask = new Task<>() {
@@ -134,5 +131,5 @@ private void startDownloadTask(String fileName, ProgressBar currentProgressBar, 
 }
 ```
 
-## Lisans
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+## License
+This project is licensed under the [MIT License](LICENSE).

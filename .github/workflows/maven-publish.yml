@@ -57,9 +57,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ env.VERSION }}
-          name: v${{ env.VERSION }} - Yeni Sürüm 🚀
+          name: v${{ env.VERSION }} - New Version 🚀
           body: |
-            Bu sürüm, önemli güncellemeler ve geliştirmeler içeriyor.
+            This version includes important updates and improvements.
           draft: false
           prerelease: false
         env:
