@@ -25,7 +25,6 @@ public class VersionUtil {
 
     private static final String GITHUB_API_URL = "https://api.github.com/repos/";
 
-    // En son sürüm tag'ını alır
     public static String getLatestVersion(String owner, String repo) {
         String url = GITHUB_API_URL + owner + "/" + repo + "/releases/latest";
         try (CloseableHttpClient client = HttpClients.createDefault()) {
@@ -41,23 +40,19 @@ public class VersionUtil {
         }
     }
 
-    // Local sürüm bilgisini alır
     public static String getLocalVersion(String node, String prefKey) {
         return System.getProperty(node + "." + prefKey, "0.0.0");
     }
 
-    // İki versiyonu karşılaştırır
     public static boolean compareVersions(String version1, String version2) {
         return version1.equals(version2);
     }
 
-    // Belirtilen versiyonun detaylarını alır
     public static ReleaseDetail getReleaseDetail(String owner, String repo, String version) {
         String url = GITHUB_API_URL + owner + "/" + repo + "/releases/tags/" + version;
         return fetchReleaseDetail(url);
     }
 
-    // En son sürümün detaylarını alır
     public static ReleaseDetail getLatestReleaseDetail(String owner, String repo) {
         String url = GITHUB_API_URL + owner + "/" + repo + "/releases/latest";
         return fetchReleaseDetail(url);
