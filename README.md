@@ -1,5 +1,7 @@
 # Version Util
 
+[![](https://jitpack.io/v/hidirektor/version-util.svg)](https://jitpack.io/#hidirektor/version-util)
+
 Version Util, Java ile geliştirilmiş bir sürüm kontrol ve güncelleme yardımcı aracıdır.
 
 ## Özellikler
@@ -11,12 +13,33 @@ Version Util, Java ile geliştirilmiş bir sürüm kontrol ve güncelleme yardı
 
 ## Kurulum
 
+### Maven
+
 ```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
 <dependency>
-    <groupId>io.github.hidirektor</groupId>
+    <groupId>com.github.hidirektor</groupId>
     <artifactId>version-util</artifactId>
     <version>1.0.0</version>
 </dependency>
+```
+
+### Gradle
+
+```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.hidirektor:version-util:1.0.0'
+}
 ```
 
 ## Kullanım
@@ -69,30 +92,30 @@ VersionUtil.downloadLatest("owner", "repo", "./downloads", "example-file.jar");
 ### Platforma Göre Dosya Çalıştırma
 ```java
 try {
-String os = System.getProperty("os.name").toLowerCase();
+    String os = System.getProperty("os.name").toLowerCase();
 
     if (os.contains("win") && hydraulicPath.endsWith(".exe")) {
         new ProcessBuilder("cmd.exe", "/c", hydraulicPath).start();
     } else if (os.contains("nix") || os.contains("nux")) {
         if (hydraulicPath.endsWith(".jar")) {
-        new ProcessBuilder("java", "-jar", hydraulicPath).start();
+            new ProcessBuilder("java", "-jar", hydraulicPath).start();
         } else {
-                System.err.println("Unsupported file type for Unix/Linux: " + hydraulicPath);
+            System.err.println("Unsupported file type for Unix/Linux: " + hydraulicPath);
         }
-                } else if (os.contains("mac")) {
+    } else if (os.contains("mac")) {
         if (hydraulicPath.endsWith(".jar")) {
-        new ProcessBuilder("java", "-jar", hydraulicPath).start();
+            new ProcessBuilder("java", "-jar", hydraulicPath).start();
         } else {
-                System.err.println("Unsupported file type for MacOS: " + hydraulicPath);
+            System.err.println("Unsupported file type for MacOS: " + hydraulicPath);
         }
-                } else {
-                System.err.println("Unsupported OS or file type for: " + hydraulicPath);
+    } else {
+        System.err.println("Unsupported OS or file type for: " + hydraulicPath);
     }
 
-            GeneralUtil.minimizeToSystemTray(currentStage);
+    GeneralUtil.minimizeToSystemTray(currentStage);
 
 } catch (IOException e) {
-        e.printStackTrace();
+    e.printStackTrace();
     System.err.println("Failed to execute hydraulic file: " + hydraulicPath);
 }
 ```
