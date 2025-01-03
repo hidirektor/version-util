@@ -22,6 +22,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 /**
  * Utility class for managing version-related operations, such as fetching release details
@@ -62,7 +63,9 @@ public class VersionUtil {
      * @return The local version as a string; defaults to "0.0.0" if not found.
      */
     public static String getLocalVersion(String node, String prefKey) {
-        return System.getProperty(node + "." + prefKey, "0.0.0");
+        String version = Preferences.userRoot().node(node).get(prefKey, null);
+
+        return version != null ? version : "0.0.0";
     }
 
     /**
