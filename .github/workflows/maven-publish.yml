@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'pom.xml'  # Sadece pom.xml değişikliklerinde çalıştırılır.
+      - 'pom.xml'
 
 jobs:
   publish:
