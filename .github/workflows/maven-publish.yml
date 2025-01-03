@@ -36,7 +36,7 @@ jobs:
           sudo mv apache-maven-3.8.8 /opt/maven
           sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn
           mvn -version
-      
+
 
       - name: Cache Maven packages
         uses: actions/cache@v3
