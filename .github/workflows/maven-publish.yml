@@ -25,13 +25,18 @@ jobs:
 
       - name: Install Maven 3.8.8
         run: |
-            sudo apt-get update
-            sudo apt-get install -y wget
-            wget https://archive.apache.org/dist/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
-            tar -xvzf apache-maven-3.8.8-bin.tar.gz
-            sudo mv apache-maven-3.8.8 /opt/maven
-            sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn
-            mvn -version
+          sudo rm -f /usr/bin/mvn
+          sudo rm -rf /opt/maven
+          sudo apt-get remove -y maven
+
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://archive.apache.org/dist/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+          tar -xvzf apache-maven-3.8.8-bin.tar.gz
+          sudo mv apache-maven-3.8.8 /opt/maven
+          sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn
+          mvn -version
+      
 
       - name: Cache Maven packages
         uses: actions/cache@v3
