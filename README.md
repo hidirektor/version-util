@@ -21,55 +21,81 @@ Version Util, Java ile geliştirilmiş bir sürüm kontrol ve güncelleme yardı
 
 ## Kullanım
 
-### Sürüm Bilgisi Çekme
+### En Son Sürümü Alma
 ```java
-String latestVersion = VersionUtil.getLatestVersionFromGitHub("https://github.com/user/repo/releases/latest");
-System.out.println("Son sürüm: " + latestVersion);
+String latestVersion = VersionUtil.getLatestVersion("owner", "repo");
+System.out.println("En son sürüm: " + latestVersion);
 ```
 
-### Dosya İndirme ve Çalıştırma
+### Yerel Sürüm Kontrolü
 ```java
-for (JsonElement asset : assetsArray) {
-    JsonObject assetObject = asset.getAsJsonObject();
-    String assetName = assetObject.get("name").getAsString();
-    if (desiredFile == null || desiredFile.equals(assetName)) {
-        String downloadUrl = assetObject.get("browser_download_url").getAsString();
-        downloadFile(downloadUrl, destinationPath + "/" + assetName);
-    }
-}
+String localVersion = VersionUtil.getLocalVersion("configNode", "versionKey");
+System.out.println("Yerel sürüm: " + localVersion);
+```
+
+### Sürüm Karşılaştırma
+```java
+boolean isSame = VersionUtil.compareVersions("1.0.0", "1.0.0");
+System.out.println("Sürümler eşit mi? " + isSame);
+```
+
+### Yayın Detaylarını Alma
+```java
+ReleaseDetail detail = VersionUtil.getReleaseDetail("owner", "repo", "1.0.0");
+System.out.println("Başlık: " + detail.getTitle());
+System.out.println("Açıklama: " + detail.getDescription());
+System.out.println("Dosyalar: " + detail.getAssets());
+```
+
+### En Son Yayın Detaylarını Alma
+```java
+ReleaseDetail latestDetail = VersionUtil.getLatestReleaseDetail("owner", "repo");
+System.out.println("Başlık: " + latestDetail.getTitle());
+System.out.println("Açıklama: " + latestDetail.getDescription());
+System.out.println("Dosyalar: " + latestDetail.getAssets());
+```
+
+### Dosya İndirme
+#### Belirli Sürüm
+```java
+VersionUtil.downloadVersion("owner", "repo", "1.0.0", "./downloads", "example-file.jar");
+```
+
+#### En Son Sürüm
+```java
+VersionUtil.downloadLatest("owner", "repo", "./downloads", "example-file.jar");
 ```
 
 ### Platforma Göre Dosya Çalıştırma
 ```java
 try {
-    String os = System.getProperty("os.name").toLowerCase();
+String os = System.getProperty("os.name").toLowerCase();
 
     if (os.contains("win") && hydraulicPath.endsWith(".exe")) {
         new ProcessBuilder("cmd.exe", "/c", hydraulicPath).start();
     } else if (os.contains("nix") || os.contains("nux")) {
         if (hydraulicPath.endsWith(".jar")) {
-            new ProcessBuilder("java", "-jar", hydraulicPath).start();
+        new ProcessBuilder("java", "-jar", hydraulicPath).start();
         } else {
-            System.err.println("Unsupported file type for Unix/Linux: " + hydraulicPath);
+                System.err.println("Unsupported file type for Unix/Linux: " + hydraulicPath);
         }
-    } else if (os.contains("mac")) {
+                } else if (os.contains("mac")) {
         if (hydraulicPath.endsWith(".jar")) {
-            new ProcessBuilder("java", "-jar", hydraulicPath).start();
+        new ProcessBuilder("java", "-jar", hydraulicPath).start();
         } else {
-            System.err.println("Unsupported file type for MacOS: " + hydraulicPath);
+                System.err.println("Unsupported file type for MacOS: " + hydraulicPath);
         }
-    } else {
-        System.err.println("Unsupported OS or file type for: " + hydraulicPath);
+                } else {
+                System.err.println("Unsupported OS or file type for: " + hydraulicPath);
     }
 
-    GeneralUtil.minimizeToSystemTray(currentStage);
+            GeneralUtil.minimizeToSystemTray(currentStage);
 
 } catch (IOException e) {
-    e.printStackTrace();
+        e.printStackTrace();
     System.err.println("Failed to execute hydraulic file: " + hydraulicPath);
 }
 ```
 
 ## Lisans
 Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
-

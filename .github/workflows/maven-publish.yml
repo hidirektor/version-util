@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'pom.xml'  # Sadece pom.xml değişikliklerinde çalıştırılır.
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +30,28 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      - name: Extract Local Version
+        id: local_version
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: Fetch Remote Version
+        id: remote_version
+        run: |
+          REMOTE_VERSION=$(curl -s https://raw.githubusercontent.com/hidirektor/version-util/master/pom.xml | grep -oPm1 "(?<=<version>)[^<]+")
+          echo "REMOTE_VERSION=$REMOTE_VERSION" >> $GITHUB_ENV
+
+      - name: Compare Versions
+        id: compare
+        run: |
+          echo "Local Version: ${{ env.VERSION }}"
+          echo "Remote Version: ${{ env.REMOTE_VERSION }}"
+          if [ "${{ env.VERSION }}" == "${{ env.REMOTE_VERSION }}" ]; then
+            echo "No new version detected. Skipping deployment."
+            exit 0
+          else
+            echo "New version detected: ${{ env.VERSION }}. Proceeding with deployment."
+          fi
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
