@@ -1,4 +1,4 @@
-package me.t3sl4.util.versionutil;
+package me.t3sl4.util.version.model;
 
 import java.util.List;
 

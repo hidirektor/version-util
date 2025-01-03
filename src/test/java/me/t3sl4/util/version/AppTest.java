@@ -1,8 +1,8 @@
-package io.github.hidirektor;
+package me.t3sl4.util.version;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppTest {
     
