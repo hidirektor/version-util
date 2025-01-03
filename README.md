@@ -23,7 +23,7 @@ Version Util is a version management and update utility developed in Java.
 <dependency>
     <groupId>com.github.hidirektor</groupId>
     <artifactId>version-util</artifactId>
-    <version>v1.0.4</version>
+    <version>v1.1.8</version>
 </dependency>
 ```
 
@@ -35,7 +35,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.hidirektor:version-util:1.0.0'
+    implementation 'com.github.hidirektor:version-util:v1.1.8'
 }
 ```
 
