@@ -6,7 +6,7 @@
 
     <groupId>me.t3sl4.util</groupId>
     <artifactId>version-util</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <name>Version Util</name>
     <description>GitHub releases based version control system.</description>
 
