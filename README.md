@@ -24,9 +24,9 @@ Version Util, Java ile geliştirilmiş bir sürüm kontrol ve güncelleme yardı
 </repositories>
 
 <dependency>
-    <groupId>com.github.hidirektor</groupId>
-    <artifactId>version-util</artifactId>
-    <version>v1.0.4</version>
+<groupId>com.github.hidirektor</groupId>
+<artifactId>version-util</artifactId>
+<version>v1.0.4</version>
 </dependency>
 ```
 
@@ -66,16 +66,16 @@ System.out.println("Sürümler eşit mi? " + isSame);
 ```java
 ReleaseDetail detail = VersionUtil.getReleaseDetail("owner", "repo", "1.0.0");
 System.out.println("Başlık: " + detail.getTitle());
-System.out.println("Açıklama: " + detail.getDescription());
-System.out.println("Dosyalar: " + detail.getAssets());
+        System.out.println("Açıklama: " + detail.getDescription());
+        System.out.println("Dosyalar: " + detail.getAssets());
 ```
 
 ### En Son Yayın Detaylarını Alma
 ```java
 ReleaseDetail latestDetail = VersionUtil.getLatestReleaseDetail("owner", "repo");
 System.out.println("Başlık: " + latestDetail.getTitle());
-System.out.println("Açıklama: " + latestDetail.getDescription());
-System.out.println("Dosyalar: " + latestDetail.getAssets());
+        System.out.println("Açıklama: " + latestDetail.getDescription());
+        System.out.println("Dosyalar: " + latestDetail.getAssets());
 ```
 
 ### Dosya İndirme
@@ -89,34 +89,48 @@ VersionUtil.downloadVersion("owner", "repo", "1.0.0", "./downloads", "example-fi
 VersionUtil.downloadLatest("owner", "repo", "./downloads", "example-file.jar");
 ```
 
-### Platforma Göre Dosya Çalıştırma
+### ProgressBar ile Dosya İndirme
 ```java
-try {
-    String os = System.getProperty("os.name").toLowerCase();
+private void startDownloadTask(String fileName, ProgressBar currentProgressBar, String repoName) {
+    Task<Void> downloadTask = new Task<>() {
+        @Override
+        protected Void call() {
+            try {
+                DownloadProgressListener downloadListener = (bytesRead, totalBytes) -> {
+                    Platform.runLater(() -> currentProgressBar.setProgress(0));
 
-    if (os.contains("win") && hydraulicPath.endsWith(".exe")) {
-        new ProcessBuilder("cmd.exe", "/c", hydraulicPath).start();
-    } else if (os.contains("nix") || os.contains("nux")) {
-        if (hydraulicPath.endsWith(".jar")) {
-            new ProcessBuilder("java", "-jar", hydraulicPath).start();
-        } else {
-            System.err.println("Unsupported file type for Unix/Linux: " + hydraulicPath);
+                    if (totalBytes > 0) {
+                        double progress = (double) bytesRead / totalBytes;
+                        Platform.runLater(() -> currentProgressBar.setProgress(progress));
+                    } else {
+                        Platform.runLater(() -> currentProgressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS)); // Indeterminate progress
+                    }
+                };
+
+                VersionUtil.downloadLatestWithProgress(
+                        Definitions.REPO_OWNER,
+                        repoName,
+                        Definitions.mainPath,
+                        fileName,
+                        downloadListener
+                );
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            return null;
         }
-    } else if (os.contains("mac")) {
-        if (hydraulicPath.endsWith(".jar")) {
-            new ProcessBuilder("java", "-jar", hydraulicPath).start();
-        } else {
-            System.err.println("Unsupported file type for MacOS: " + hydraulicPath);
-        }
-    } else {
-        System.err.println("Unsupported OS or file type for: " + hydraulicPath);
+    };
+
+    try {
+        Thread downloadThread = new Thread(downloadTask);
+        downloadThread.setDaemon(true);
+        downloadThread.start();
+        downloadThread.join();
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        e.printStackTrace();
+        // Handle the interruption appropriately
     }
-
-    GeneralUtil.minimizeToSystemTray(currentStage);
-
-} catch (IOException e) {
-    e.printStackTrace();
-    System.err.println("Failed to execute hydraulic file: " + hydraulicPath);
 }
 ```
 
