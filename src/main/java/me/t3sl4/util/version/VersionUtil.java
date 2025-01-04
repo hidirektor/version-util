@@ -44,11 +44,27 @@ public class VersionUtil {
         String url = GITHUB_API_URL + owner + "/" + repo + "/releases/latest";
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
+            request.setHeader("Accept", "application/vnd.github.v3+json");
+
             try (CloseableHttpResponse response = client.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+
+                if (statusCode != 200) {
+                    throw new VersionException("HTTP Error: " + statusCode);
+                }
+
                 HttpEntity entity = response.getEntity();
                 String result = EntityUtils.toString(entity);
+
+                System.out.println("API Response: " + result);
+
                 JsonObject json = JsonParser.parseString(result).getAsJsonObject();
-                return json.get("tag_name").getAsString();
+
+                if (json.has("tag_name") && !json.get("tag_name").isJsonNull()) {
+                    return json.get("tag_name").getAsString();
+                } else {
+                    throw new VersionException("Release bulunamadı: 'tag_name' alanı eksik veya null.");
+                }
             }
         } catch (Exception e) {
             throw new VersionException("Release bulunamadı: " + e.getMessage());
